@@ -1,0 +1,76 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    Image1: TImage;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Timer1: TTimer;
+    procedure Timer1Timer(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  a:integer;
+  s1:word;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+Var h,m,s,ms:word;
+begin
+
+     {изменяем координаты}
+
+    DecodeTime(now,h,m,s,ms);
+
+    if s1<>s then
+     begin
+
+     {стираем}
+
+    Image1.Canvas.Pen.Color:=clWhite;
+    Image1.Canvas.MoveTo
+    (Image1.Width div 2,
+    Image1.Height div 2
+    );
+    Image1.Canvas.LineTo(
+    round(Image1.Width div 2 + 150*cos((90-s1*6)*pi/180)),
+    round(Image1.Height div 2 - 150*sin((90-s1*6)*pi/180))
+    );
+
+    end;
+
+    {рисуем}
+
+    if s1<>s then
+    begin
+    Image1.Canvas.Pen.Color:=clRed;
+    Image1.Canvas.MoveTo(
+    Image1.Width div 2,
+    Image1.Height div 2
+    );
+    Image1.Canvas.LineTo(
+    round(Image1.Width div 2 + 150*cos((90-s*6)*pi/180)),
+    round(Image1.Height div 2 - 150*sin((90-s*6)*pi/180))
+    );
+    s1:=s;
+    end;
+
+end;
+
+end.
